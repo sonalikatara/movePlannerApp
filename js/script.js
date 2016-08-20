@@ -45,7 +45,8 @@ $.getJSON( url, function(data) {
     console.log( "second success" );
     var items = data.response.docs;
     for (var i=0;i < items.length ;i++){
-        $nytElem.append("<p>" + items[i].snippet + "</p>");
+        $nytElem.append("<article><a href='"+ items[i].web_url  + "'>" + items[i].snippet +"</a>");
+        $nytElem.append("<p>" + items[i].lead_paragraph + "</p></article>");
    }
    })
   .fail(function() {
