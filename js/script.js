@@ -22,14 +22,18 @@ function loadData() {
 
    // load NYTimes data
 
- var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-  url += '?' + $.param({
+ var nyTimesUrl = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+  nyTimesUrl += '?' + $.param({
   'api-key': "08b7ac160dda4cbbb91126ee6bbae817",
-  'q': "keywords=" +cityStr
-  });
+  'q': "keywords=" +cityStr,
+   'sort': "newest"   
+ });
+
+// could have asle said
+// var nyTimesUrl =  "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + cityStr + "&sort=newest&api-key=xxxxxxxxxxx";
 
 /*$.ajax({
-  url: url,
+  url: nyTimesUrl,
   method: 'GET',
 }).done(function(result) {
   console.log(result);
@@ -38,15 +42,15 @@ function loadData() {
 });
 */
 
-$.getJSON( url, function(data) {
+$.getJSON( nyTimesUrl, function(data) {
   console.log( "success" );
 })
   .done(function(data) {
     console.log( "second success" );
     var items = data.response.docs;
     for (var i=0;i < items.length ;i++){
-        $nytElem.append("<article><a href='"+ items[i].web_url  + "'>" + items[i].snippet +"</a>");
-        $nytElem.append("<p>" + items[i].lead_paragraph + "</p></article>");
+        $nytElem.append("<li class='article'><a href='"+ items[i].web_url  + "'>" + items[i].headline.main +"</a>");
+        $nytElem.append("<p>" + items[i].snippet + "</p></li>");
    }
    })
   .fail(function() {
